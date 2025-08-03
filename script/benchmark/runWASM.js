@@ -4,15 +4,27 @@ const fs = require("fs");
 const { performance } = require("perf_hooks");
 
 (async () => {
-  const bytes = fs.readFileSync("./benchmark.wasm");
-  const module = await WebAssembly.instantiate(bytes, {});
-  const { intArith, floatArith, tableOps, recurse } = module.instance.exports;
+  const wasmBuffer = fs.readFileSync("benchmark.wasm");
+
+  const imports = {
+    env: {
+      abort(msgPtr, filePtr, line, col) {
+        console.error("Abort called at", line, col);
+      },
+      // 如果你关闭 runtime，可以去掉
+    }
+  };
+
+  const { instance } = await WebAssembly.instantiate(wasmBuffer, imports);
+        
+  // 调用导出函数
+  const { intArith, floatArith, tableOps, recurse } = instance.exports;
 
   function benchmark(name, fn) {
-    const start = performance.now();
+    const t0 = performance.now();
     const result = fn();
-    const duration = (performance.now() - start) / 1000;
-    console.log(`[${name.padEnd(20)}] ${duration.toFixed(3)}s  Result: ${result}`);
+    const t1 = performance.now();
+    console.log(`[${name.padEnd(24)}] ${(t1 - t0).toFixed(2)} ms  Result: ${result}`);
   }
 
   benchmark("Integer Arithmetic", intArith);

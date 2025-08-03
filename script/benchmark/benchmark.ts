@@ -1,7 +1,7 @@
 // benchmark.ts
 // 用于AssemblyScript和luajit等形成对比
 // npm install -g assemblyscript
-// asc benchmark.ts -b benchmark.wasm --optimize --noAssert
+// asc benchmark.ts -b -o benchmark.wasm --optimize --noAssert
 // 你会得到：
 //    benchmark.wasm
 //    （可选）benchmark.wat - 可读的 WebAssembly 文本格式
@@ -9,16 +9,16 @@
 
 export function intArith(): i64 {
   let sum: i64 = 0;
-  for (let i: i64 = 1; i <= 1e8; i++) {
+  for (let i: i64 = 1; i <= 100_000_000; i++) {
     sum += i;
   }
   return sum;
 }
 
-export function floatArith(): f64 {
-  let sum: f64 = 0.0;
-  for (let i: i32 = 1; i <= 1e7; i++) {
-    sum += Mathf.sin(f64(i)) * Mathf.cos(f64(i));
+export function floatArith(): f32 {
+  let sum: f32 = 0.0;
+  for (let i: i32 = 1; i <= 10_000_000; i++) {
+    sum += Mathf.sin(i as f32) * Mathf.cos(i as f32);
   }
   return sum;
 }
