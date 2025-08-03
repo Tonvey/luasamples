@@ -43,4 +43,4 @@ end
 benchmark("Integer Arithmetic", int_arith)
 benchmark("Float Arithmetic", float_arith)
 benchmark("Table Operations", table_ops)
-benchmark("Recursion (Depth 10000)", function() recurse(10000) end)
+benchmark("Recursion (Depth 5000)", function() recurse(5000) end)
