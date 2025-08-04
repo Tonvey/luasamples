@@ -2,28 +2,6 @@
 #include <lua.hpp>
 using namespace std;
 
-int simple_test(lua_State *L)
-{
-    cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  into simple_test" << endl;
-    cout << "当前栈上数量 = " << lua_gettop(L) << endl;
-
-    // 获取lua脚本传过来的参数
-    const char *name = lua_tostring(L, -2);
-    //    size_t len;
-    //    const char *name = lua_tolstring(L, -2, &len);
-    lua_Integer age = lua_tointeger(L, -1);
-    lua_pop(L, 2);
-
-    cout << "name:" << name << "  age:" << age << endl;
-
-    // lua脚本调用函数的返回值
-    lua_pushinteger(L, 99);
-
-    cout << "当前栈上数量 = " << lua_gettop(L) << endl;
-
-    return 1;
-}
-
 int array_test(lua_State *L)
 {
     cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  into array_test" << endl;
@@ -143,6 +121,28 @@ int checkType_test(lua_State *L) {
     cout << "当前栈上数量 = " << lua_gettop(L) << endl;
 
     return 0;
+}
+
+int simple_test(lua_State *L)
+{
+    cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  into simple_test" << endl;
+    cout << "当前栈上数量 = " << lua_gettop(L) << endl;
+
+    // 获取lua脚本传过来的参数
+    const char *name = lua_tostring(L, -2);
+    //    size_t len;
+    //    const char *name = lua_tolstring(L, -2, &len);
+    lua_Integer age = lua_tointeger(L, -1);
+    lua_pop(L, 2);
+
+    cout << "name:" << name << "  age:" << age << endl;
+
+    // lua脚本调用函数的返回值
+    lua_pushinteger(L, 99);
+
+    cout << "当前栈上数量 = " << lua_gettop(L) << endl;
+
+    return 1;
 }
 
 int ret_test(lua_State *L) {
